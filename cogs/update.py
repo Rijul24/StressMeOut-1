@@ -35,18 +35,7 @@ class Update(commands.Cog):
     @commands.check_any(commands.has_role("StressedOut"), commands.has_permissions(administrator=True))
     async def add(self, ctx, *, tada):
         tada = tada.split(";")
-        
-        #Addition latest
-        check = tada[1]
-        if check in ['Indefinite' , 'Coming Soon' ,'Soon', ' Indefinite',' Coming Soon']:
-            with open("_data.json", "r") as f:
-            _data = json.load(f)
-            _data[str(ctx.guild.id)].append([tada[0].strip(), tada[1].strip()])
-            #_data[str(ctx.guild.id)].sort(key=lambda val: datetime.datetime.strptime(val[1], '%Y %m %d %H %M'))
-            with open("_data.json", "w") as f:
-            json.dump(_data, f)
-            await ctx.send("**successful**")
-            
+
         if len(tada) - 2:
             await ctx.send("please provide 2 semicolon seperated arguments\n\
                       eg $add sample 1; 2021 05 10 23 59")

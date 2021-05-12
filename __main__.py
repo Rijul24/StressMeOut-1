@@ -84,6 +84,7 @@ for filename in os.listdir("./cogs"):
         client.load_extension(f"cogs.{filename[:-3]}")
 
 
-# Run the bot with the token
-keep_alive()
-client.run(os.getenv('TOKEN'))
+if __name__ == "__main__":
+    # Run the bot with the token
+    keep_alive()
+    client.run(os.getenv('TOKEN'))
