@@ -87,6 +87,4 @@ for filename in os.listdir("./cogs"):
 if __name__ == "__main__":
     # Run the bot with the token
     keep_alive()
-    TOKEN = "Nzk4MjYyMDQyNjY5NjEzMDgz.X_yddQ.ufwtDoJAC1PhLduxgYoRWMn578Q"
-    client.run(TOKEN)
-    # client.run(os.getenv('TOKEN'))
+    client.run(os.getenv('TOKEN'))
