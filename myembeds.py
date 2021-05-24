@@ -30,8 +30,8 @@ invite = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 welp = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 
 
-def e_stress(guild_id):
-    res = conv_list(guild_id)
+def e_stress(group):
+    res = conv_list(group)
     embeded = discord.Embed(color=0x7289DA)
     if len(res) == 0:
         embeded.add_field(name="moj", value="no work to do huehue")
@@ -45,6 +45,7 @@ def e_stress(guild_id):
     return embeded
 
 
+# not in use
 def e_help(ctx):
     pre = get_pref('a', ctx)[0]
     embeded = discord.Embed(

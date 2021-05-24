@@ -37,7 +37,7 @@ client = commands.Bot(
     command_prefix=get_pref,
     intents=intents,
     case_insensitive=True,
-    help_command=None,
+    # help_command=None,
     when_mentioned=True
 )
 
@@ -87,4 +87,6 @@ for filename in os.listdir("./cogs"):
 if __name__ == "__main__":
     # Run the bot with the token
     keep_alive()
-    client.run(os.getenv('TOKEN'))
+    TOKEN = "Nzk4MjYyMDQyNjY5NjEzMDgz.X_yddQ.ufwtDoJAC1PhLduxgYoRWMn578Q"
+    client.run(TOKEN)
+    # client.run(os.getenv('TOKEN'))

@@ -110,4 +110,7 @@ class Update(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(Update(client))
+    pass
+    # client.add_cog(Update(client))
+
+# diasabled update, need to work on it huehuehue

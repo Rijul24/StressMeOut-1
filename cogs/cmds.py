@@ -33,16 +33,22 @@ class Cmds(commands.Cog):
         self.client = client
 
     @commands.command(aliases=["stressme", "stressmeout"])
-    async def stress(self, ctx):
+    async def stress(self, ctx, group=None):
+        if group is not None and group.isnumeric() and 0 < int(group) < 7:
+            group = int(group)
+        else:
+            group = 0
         async with ctx.typing():
             await sleep(0)
-        await ctx.send(embed=e_stress(ctx.guild.id))
+        await ctx.send(embed=e_stress(group))
+        await ctx.send("type `$StressMe <your group number>` to view all assignments specific to your group")
 
-    @commands.command()
-    async def help(self, ctx):
-        async with ctx.typing():
-            await sleep(0)
-        await ctx.send(embed=e_help(ctx))
+    # no help 4 u
+    # @commands.command()
+    # async def help(self, ctx):
+    #     async with ctx.typing():
+    #         await sleep(0)
+    #     await ctx.send(embed=e_help(ctx))
 
     @commands.command()
     async def prefix(self, ctx):

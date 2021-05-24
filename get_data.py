@@ -22,25 +22,27 @@ SOFTWARE.
 
 """
 
-import json
+# import json
 import datetime
+import gspread
 
 
-def import_list(guild_id):
-    with open("_data.json", "r") as f:
-        data = json.load(f)
-    _guild = data.get(str(guild_id))
+def get_list(group):
+    gc = gspread.service_account(filename="creds__.json")
+    sheet = gc.open("StressMeOut").sheet1
+    data = sheet.get_all_records()
     res = []
-    for i in _guild:
-        res.append([i[0], i[1]])
+    for i in data:
+        if i["GROUP"] == 0 or i["GROUP"] == group:
+            res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
     return res
 
 
-def conv_list(guild_id):
-    res = import_list(guild_id)
+def conv_list(group):
+    res = get_list(group)
     current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in range(len(res)):
-        due = datetime.datetime.strptime(res[i][1], '%Y %m %d %H %M')
+        due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
         left = due - current
         left = str(left)
         if left[0] == "-":
