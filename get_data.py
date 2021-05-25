@@ -42,11 +42,16 @@ def conv_list(group):
     res = get_list(group)
     current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in range(len(res)):
-        due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
-        left = due - current
-        left = str(left)
+        try:
+            due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
+            left = due - current
+            left = str(left)
+        except:
+            left = "TBA"
         if left[0] == "-":
             res[i][1] = "over"
-        else:
+        elif left != "TBA":
             res[i][1] = str(left)[0:len(left) - 10] + " Hours left"
+        else:
+            res[i][1] = left
     return res
