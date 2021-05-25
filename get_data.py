@@ -53,5 +53,5 @@ def conv_list(group):
         elif left != "TBA":
             res[i][1] = str(left)[0:len(left) - 10] + " Hours left"
         else:
-            res[i][1] = left
+            res[i][1] = "To Be Announced"
     return res
