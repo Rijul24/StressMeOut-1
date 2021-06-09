@@ -41,7 +41,8 @@ class Cmds(commands.Cog):
         async with ctx.typing():
             await sleep(0)
         await ctx.send(embed=e_stress(group))
-        await ctx.send("type `$StressMe <your group number>` to view all assignments specific to your group")
+        if group == 0:
+            await ctx.send("type `$StressMe <your group number>` to view all assignments specific to your group")
 
     # no help 4 u
     # @commands.command()
