@@ -22,36 +22,21 @@ SOFTWARE.
 
 """
 
-# import json
+
 import datetime
 import gspread
 
 
-def get_list(group):
+def check_timeformat(inp: str) -> bool:
+    try:
+        due = datetime.datetime.strptime(inp, '%d.%m.%Y %H:%M')
+    except ValueError:
+        return False
+    return True
+
+
+def insert_row_sheet(deadline: str, name: str) -> None:
     gc = gspread.service_account(filename="creds__.json")
     sheet = gc.open("StressMeOut").sheet1
-    data = sheet.get_all_records()
-    res = []
-    for i in data:
-        if i["GROUP"] == 0 or i["GROUP"] == group:
-            res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
-    return res
-
-
-def conv_list(group):
-    res = get_list(group)
-    current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
-    for i in range(len(res)):
-        try:
-            due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
-            left = due - current
-            left = str(left)
-        except ValueError:
-            left = "TBA"
-        if left[0] == "-":
-            res[i][1] = "over"
-        elif left != "TBA":
-            res[i][1] = str(left)[0:len(left) - 10] + " Hours left"
-        else:
-            res[i][1] = "To Be Announced"
-    return res
+    sheet.insert_row([name, deadline, 0], 2)
+    return

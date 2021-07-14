@@ -28,6 +28,7 @@ from discord.ext import commands
 from keep_alive import keep_alive
 from getpref import get_pref
 import myembeds
+import discord_slash
 
 print("Initializing...")
 
@@ -40,6 +41,7 @@ client = commands.Bot(
     # help_command=None,
     when_mentioned=True
 )
+slash = discord_slash.SlashCommand(client, sync_commands=True)
 
 
 @client.event
@@ -87,4 +89,4 @@ for filename in os.listdir("./cogs"):
 if __name__ == "__main__":
     # Run the bot with the token
     keep_alive()
-    client.run(os.getenv('TOKEN'))
+    client.run("")

@@ -22,36 +22,33 @@ SOFTWARE.
 
 """
 
-# import json
-import datetime
-import gspread
+
+from discord.ext import commands
+from discord_slash import cog_ext, SlashContext
+from discord_slash.utils.manage_commands import create_option, create_choice
+from myembeds import e_stress
 
 
-def get_list(group):
-    gc = gspread.service_account(filename="creds__.json")
-    sheet = gc.open("StressMeOut").sheet1
-    data = sheet.get_all_records()
-    res = []
-    for i in data:
-        if i["GROUP"] == 0 or i["GROUP"] == group:
-            res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
-    return res
+class Slash(commands.Cog):
+    def __init__(self, client):
+        self.client = client
+
+    @cog_ext.cog_slash(
+        name="StressMeOut",
+        description="stresses you out lol",
+        options=[
+            create_option(
+                name="group",
+                description="specific to groups?",
+                option_type=4,
+                required=True,
+                choices=[create_choice(name=f"{i}", value=i) for i in range(1, 7)]
+            )
+        ]
+    )
+    async def stress_me_out_slash(self, ctx, group: SlashContext):
+        await ctx.send(embed=e_stress(group))
 
 
-def conv_list(group):
-    res = get_list(group)
-    current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
-    for i in range(len(res)):
-        try:
-            due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
-            left = due - current
-            left = str(left)
-        except ValueError:
-            left = "TBA"
-        if left[0] == "-":
-            res[i][1] = "over"
-        elif left != "TBA":
-            res[i][1] = str(left)[0:len(left) - 10] + " Hours left"
-        else:
-            res[i][1] = "To Be Announced"
-    return res
+def setup(client):
+    client.add_cog(Slash(client))
