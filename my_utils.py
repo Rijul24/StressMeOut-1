@@ -25,6 +25,8 @@ SOFTWARE.
 
 import datetime
 import gspread
+import json
+
 
 
 def check_timeformat(inp: str) -> bool:
@@ -40,3 +42,9 @@ def insert_row_sheet(deadline: str, name: str) -> None:
     sheet = gc.open("StressMeOut").sheet1
     sheet.insert_row([name, deadline, 0], 2)
     return
+
+
+def is_user_authorized(unique_id: int) -> bool:
+    with open("name_list_auth.json", "r") as f:
+        user_ids_auth = json.load(f)
+    return unique_id in user_ids_auth.values()

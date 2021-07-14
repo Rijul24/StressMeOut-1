@@ -25,7 +25,7 @@ SOFTWARE.
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
-from my_utils import check_timeformat, insert_row_sheet
+from my_utils import check_timeformat, insert_row_sheet, is_user_authorized
 
 
 class AddStuffSlash(commands.Cog):
@@ -68,11 +68,13 @@ class AddStuffSlash(commands.Cog):
             )
         ],
     )
-    # @cog_ext.permission(785843253877932073, )
     async def add_stuff_in_bot(self, ctx, name: SlashContext, date: SlashContext, month: SlashContext,
                                hours: SlashContext, minutes: SlashContext):
         deadline = f"{date}.{month}.2021 {hours}:{minutes}"
         name = f"{name}"
+        if not is_user_authorized(ctx.author_id):
+            await ctx.send("no prems 4 u")
+            return
         if check_timeformat(deadline):
             await ctx.send("successful")
             insert_row_sheet(deadline, name)
