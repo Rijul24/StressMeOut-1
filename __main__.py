@@ -38,7 +38,7 @@ client = commands.Bot(
     command_prefix=get_pref,
     intents=intents,
     case_insensitive=True,
-    # help_command=None,
+    help_command=None,
     when_mentioned=True
 )
 slash = discord_slash.SlashCommand(client, sync_commands=True)
