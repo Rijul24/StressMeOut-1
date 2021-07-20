@@ -28,7 +28,6 @@ import gspread
 import json
 
 
-
 def check_timeformat(inp: str) -> bool:
     try:
         due = datetime.datetime.strptime(inp, '%d.%m.%Y %H:%M')
@@ -40,8 +39,7 @@ def check_timeformat(inp: str) -> bool:
 def insert_row_sheet(deadline: str, name: str) -> None:
     gc = gspread.service_account(filename="creds__.json")
     sheet = gc.open("StressMeOut").sheet1
-    sheet.insert_row([name, deadline, 0], 2)
-    return
+    sheet.insert_row([name, deadline], 2)
 
 
 def is_user_authorized(unique_id: int) -> bool:

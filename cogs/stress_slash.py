@@ -24,8 +24,7 @@ SOFTWARE.
 
 
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
-from discord_slash.utils.manage_commands import create_option, create_choice
+from discord_slash import cog_ext
 from myembeds import e_stress
 
 
@@ -35,19 +34,10 @@ class Slash(commands.Cog):
 
     @cog_ext.cog_slash(
         name="StressMeOut",
-        description="stresses you out lol",
-        options=[
-            create_option(
-                name="group",
-                description="specific to groups?",
-                option_type=4,
-                required=True,
-                choices=[create_choice(name=f"{i}", value=i) for i in range(1, 7)]
-            )
-        ]
+        description="stresses you out lol"
     )
-    async def stress_me_out_slash(self, ctx, group: SlashContext):
-        await ctx.send(embed=e_stress(group))
+    async def stress_me_out_slash(self, ctx):
+        await ctx.send(embed=e_stress())
 
 
 def setup(client):

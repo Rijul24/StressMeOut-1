@@ -22,19 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 import discord
 from get_data import conv_list
 from getpref import get_pref
 
+
 invite = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
-welp = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
+help_link = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 
 
-def e_stress(group):
-    res = conv_list(group)
+def e_stress():
+    res = conv_list()
     embeded = discord.Embed(color=0x7289DA)
     if len(res) == 0:
-        embeded.add_field(name="moj", value="no work to do huehue")
+        embeded.add_field(name="moj", value="no work to do huehuehue")
     else:
         for i in range(len(res)):
             embeded.add_field(
@@ -47,55 +49,11 @@ def e_stress(group):
 
 # not in use
 def e_help(ctx):
-    pre = get_pref('a', ctx)[0]
     embeded = discord.Embed(
-        color=0x00FF00,
-        title="Command List",
-        description=f"(invite link)[{invite}] | (help)[{welp}]"
+        colour=0x00FF00,
+        title="HELP",
+        description=f"full list of commands can be found [here]({help_link})"
     )
-    embeded.add_field(
-        value=f"Prefix in the server is {pre}\nYou can also mention the Bot",
-        name="**Prefix in this server**",
-        inline=False
-    )
-    embeded.add_field(
-            value=f"{pre}changepref (new prefix)\nWithout parentheses\naliase -> changeprefix",
-            name="**To change the prefix of bot (ADMIN ONLY)**",
-            inline=False
-    )
-    embeded.add_field(
-        value=f"{pre}Stress\naliases -> ({pre}StressMe, {pre}StressMeOut)",
-        name="**~~Stress~~**",
-        inline=False
-    )
-    embeded.add_field(
-        name="-----YOU NEED A \"StressedOut\" role for the commands below-----",
-        value="-"*77
-    )
-    embeded.add_field(
-        value=f"to add a value\n\
-               -> {pre}add name; deadline \n\
-               deadline should be of format YYYY MM DD HH mm\n\
-                eg {pre}add Sample 7; 2021 05 20 23 59",
-        name="**add**",
-        inline=False
-    )
-    embeded.add_field(
-        value=f"to delete a value duh eg \n\
-                {pre}delete (position)\n\
-                position should be a valid integer",
-        name="**Delete**",
-        inline=False
-    )
-    embeded.add_field(
-        value=f"to change the value of a existing entry\n\
-            -> {pre}update (position); deadline/name; (new value)\n\
-              eg {pre}update 2; name; Sample 2 \n\
-              eg {pre}update 4; deadline; 2021 05 10 20 59",
-        name="**Update**",
-        inline=False
-    )
-    return embeded
 
 
 def e_miss_perm_admin():

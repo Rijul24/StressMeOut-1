@@ -22,31 +22,23 @@ SOFTWARE.
 
 """
 
-# import json
 import datetime
 import gspread
 
 
-def get_list(group):
+def get_list():
     gc = gspread.service_account(filename="creds__.json")
     sheet = gc.open("StressMeOut").sheet1
     data = sheet.get_all_records()
-    if group == -1:
-        res = []
-        i = 1
-        for i in data:
-            res.append([f"{i}) " + i["TITLE"], i["dd.mm.yyyy hh:mm"]])
-            i += 1
-        return res
+
     res = []
     for i in data:
-        if i["GROUP"] == 0 or i["GROUP"] == group:
-            res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
+        res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
     return res
 
 
-def conv_list(group):
-    res = get_list(group)
+def conv_list():
+    res = get_list()
     current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in range(len(res)):
         try:

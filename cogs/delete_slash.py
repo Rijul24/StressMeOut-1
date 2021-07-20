@@ -30,7 +30,6 @@ from discord_slash.utils.manage_components import create_button, create_actionro
 from discord_slash.model import ButtonStyle
 
 
-
 class DeleteStuffSlash(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -51,7 +50,7 @@ class DeleteStuffSlash(commands.Cog):
             )
         ]
         action_row = create_actionrow(*buttons)
-        await ctx.send(embed=e_stress(-1), components=[action_row])
+        await ctx.send(embed=e_stress(), components=[action_row])
         button_ctx = await wait_for_component(self.client, components=action_row)
         await button_ctx.edit_origin(content="You pressed a button!")
 
