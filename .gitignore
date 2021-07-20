@@ -1,6 +1,7 @@
 .env
 .vs
 creds__.json
+name_list_auth.json
 *.idea
 __pycache__
 */__pycache__
