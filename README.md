@@ -2,4 +2,4 @@
 
 A Discord bot that ~~stresses you out~~ displays time remaining until deadline.
 
-- uses Google Sheet to store data
+- uses Google Sheets to store data

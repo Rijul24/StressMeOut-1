@@ -1,7 +1,6 @@
 .env
 .vs
-*.json
-!prefixes.json
+creds__.json
 *.idea
 __pycache__
 */__pycache__

@@ -47,13 +47,13 @@ def e_stress():
     return embeded
 
 
-# not in use
-def e_help(ctx):
+def e_help():
     embeded = discord.Embed(
         colour=0x00FF00,
         title="HELP",
         description=f"full list of commands can be found [here]({help_link})"
     )
+    return embeded
 
 
 def e_miss_perm_admin():

@@ -43,7 +43,7 @@ class Cmds(commands.Cog):
     async def help(self, ctx):
         async with ctx.typing():
             await sleep(0)
-        await ctx.send(embed=e_help(ctx))
+        await ctx.send(embed=e_help())
 
     @commands.command()
     async def prefix(self, ctx):

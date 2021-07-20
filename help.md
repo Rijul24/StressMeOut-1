@@ -1,30 +1,27 @@
 # LIST OF COMMANDS
 
-- STRESS (STRESSME, STRESSMEOUT)
-<br>
-Displays all the assignments/quizzes with time remaining
+### STRESS (STRESSME, STRESSMEOUT)
+- Displays all the assignments/quizzes with time remaining
 
-- PREFIX
-<br>
-  To find of the prefix of the bot (guild specific)
+### PREFIX
+- To find of the prefix of the bot (guild specific)
     
-- CHANGEPREFIX
-<br>
-  to change the prefix lol
+### CHANGEPREFIX
+- to change the prefix lol
   
+<br>
 
 ## SLASH COMMANDS!
 
-- STRESSMEOUT
-<br>
-  Stresses you out lol
+### STRESSMEOUT
+- Stresses you out lol
 
-- ADD
+### ADD
+- To add assignments and with deadlines in the bot, should have specific role to run the command
+
+### DELETE
+- To delete deadlines from the bot, requires permissions
+
 <br>
-  To add assignments and with deadlines in the bot, should have specific role to run the command
-  
-- DELETE
-<br>
-  To delete deadlines from the bot, requires permissions
-  
-```no 'update' option yet, delete and add again```
+
+```no 'update' option yet, delete and add again lol```
