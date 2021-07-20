@@ -31,6 +31,13 @@ def get_list(group):
     gc = gspread.service_account(filename="creds__.json")
     sheet = gc.open("StressMeOut").sheet1
     data = sheet.get_all_records()
+    if group == -1:
+        res = []
+        i = 1
+        for i in data:
+            res.append([f"{i}) " + i["TITLE"], i["dd.mm.yyyy hh:mm"]])
+            i += 1
+        return res
     res = []
     for i in data:
         if i["GROUP"] == 0 or i["GROUP"] == group:
