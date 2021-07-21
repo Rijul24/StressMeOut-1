@@ -1,7 +1,17 @@
-.env
 .vs
+
+# Google API Client secret
 creds__.json
+
+# 
 name_list_auth.json
-*.idea
-__pycache__
-*/__pycache__
+
+# python virtual environment/compiled files
+venv/
+
+# Intellij/PyCharm config
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]

@@ -28,6 +28,8 @@ from discord.ext import commands
 from getpref import get_pref
 import myembeds
 import discord_slash
+from flask_thing import keep_alive
+
 
 print("Initializing...")
 
@@ -85,6 +87,10 @@ for filename in os.listdir("./cogs"):
         client.load_extension(f"cogs.{filename[:-3]}")
 
 
+token = os.getenv('TOKEN')
+
+
 if __name__ == "__main__":
     # Run the bot with the token
-    client.run("")
+    keep_alive()
+    client.run(token)

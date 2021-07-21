@@ -1,11 +1,11 @@
 FROM python:3.9.1
 
-WORKDIR /app
+COPY ./requirements.txt /app/requirements.txt
 
-COPY requirements.txt requirements.txt
+WORKDIR /app
 
 RUN pip3 install -r requirements.txt
 
-COPY . .
+COPY . /app
 
-CMD [ "python", "./__main__.py" ]
+CMD [ "python", "./__main__.py", "8080" ]

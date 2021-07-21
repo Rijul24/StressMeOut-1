@@ -1,0 +1,5 @@
+---
+applications:
+ - name: StressMeOut
+   random-route: true
+   memory: 256M
