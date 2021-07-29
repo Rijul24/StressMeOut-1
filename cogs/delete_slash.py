@@ -26,7 +26,7 @@ from discord.ext import commands
 from discord_slash import cog_ext
 from my_utils import is_user_authorized
 from myembeds import e_stress
-from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component
+from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext
 from discord_slash.model import ButtonStyle
 
 
@@ -43,16 +43,15 @@ class DeleteStuffSlash(commands.Cog):
             await ctx.send("no prems 4 u")
             return
 
-        buttons = [
-            create_button(
-                style=ButtonStyle.green,
-                label="A Green Button"
-            )
-        ]
+        buttons = [create_button(style=ButtonStyle.red, label=f"{x}th", custom_id=f"{x}") for x in range(1, 6)]
         action_row = create_actionrow(*buttons)
-        await ctx.send(embed=e_stress(), components=[action_row])
-        button_ctx = await wait_for_component(self.client, components=action_row)
-        await button_ctx.edit_origin(content="You pressed a button!")
+        await ctx.send("select the option which you want to delete", embed=e_stress(), components=[action_row])
+
+    @commands.Cog.listener()
+    async def on_component(self, ctx: ComponentContext):
+        if not is_user_authorized(ctx.author_id):
+            return
+        await ctx.edit_origin(content=f"succesfully deleted {ctx.custom_id}th thing", components=None, embed=None)
 
 
 def setup(client):
