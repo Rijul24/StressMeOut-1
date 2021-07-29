@@ -24,6 +24,7 @@ SOFTWARE.
 
 import datetime
 import gspread
+from my_utils import change_timeformat
 
 
 def get_list():
@@ -41,16 +42,12 @@ def conv_list():
     res = get_list()
     current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in range(len(res)):
-        try:
-            due = datetime.datetime.strptime(res[i][1], '%d.%m.%Y %H:%M')
-            left = due - current
-            left = str(left)
-        except ValueError:
-            left = "TBA"
-        if left[0] == "-":
-            res[i][1] = "over"
-        elif left != "TBA":
-            res[i][1] = str(left)[0:len(left) - 10] + " Hours left"
+        left = change_timeformat(res[i][1])
+        if left:
+            left = str(left - current)
+            res[i][1] = left[0:len(left) - 10] + " Hours left"
+            if left[0] == "-":
+                res[i][1] = "over"
         else:
             res[i][1] = "To Be Announced"
     return res

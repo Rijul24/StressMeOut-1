@@ -25,7 +25,7 @@ SOFTWARE.
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
-from my_utils import check_timeformat, insert_row_sheet, is_user_authorized
+from my_utils import change_timeformat, insert_row_sheet, is_user_authorized
 
 
 class AddStuffSlash(commands.Cog):
@@ -75,7 +75,7 @@ class AddStuffSlash(commands.Cog):
         if not is_user_authorized(ctx.author_id):
             await ctx.send("no prems 4 u")
             return
-        if check_timeformat(deadline):
+        if change_timeformat(deadline):
             await ctx.send("successful")
             insert_row_sheet(deadline, name)
         else:

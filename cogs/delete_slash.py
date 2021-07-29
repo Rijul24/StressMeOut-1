@@ -39,6 +39,7 @@ class DeleteStuffSlash(commands.Cog):
         description="to delete 'stuff' from bot"
     )
     async def delete_stuff_from_bot(self, ctx):
+        print("herer")
         if not is_user_authorized(ctx.author_id):
             await ctx.send("no prems 4 u")
             return

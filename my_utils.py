@@ -28,12 +28,12 @@ import gspread
 import json
 
 
-def check_timeformat(inp: str) -> bool:
+def change_timeformat(inp: str):
     try:
         due = datetime.datetime.strptime(inp, '%d.%m.%Y %H:%M')
     except ValueError:
         return False
-    return True
+    return due
 
 
 def insert_row_sheet(deadline: str, name: str) -> None:
