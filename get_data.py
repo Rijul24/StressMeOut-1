@@ -35,11 +35,11 @@ def get_list():
     res = []
     for i in data:
         res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
-    return res
+    return res, len(res)
 
 
 def conv_list():
-    res = get_list()
+    res, length = get_list()
     current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in range(len(res)):
         left = change_timeformat(res[i][1])
@@ -50,4 +50,4 @@ def conv_list():
                 res[i][1] = "over"
         else:
             res[i][1] = "To Be Announced"
-    return res
+    return res, length

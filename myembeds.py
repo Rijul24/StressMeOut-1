@@ -32,8 +32,9 @@ invite = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 help_link = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 
 
-def e_stress():
-    res = conv_list()
+def e_stress(parameter=0):
+    # param = 0 -> only embed, = -1 -> incude number
+    res, length = conv_list()
     embeded = discord.Embed(color=0x7289DA)
     if len(res) == 0:
         embeded.add_field(name="moj", value="no work to do huehuehue")
@@ -43,7 +44,9 @@ def e_stress():
                 value=format(res[i][1]),
                 name="**" + str(res[i][0]) + "**",
                 inline=False
-                )
+            )
+    if parameter == -1:
+        return embeded, length
     return embeded
 
 

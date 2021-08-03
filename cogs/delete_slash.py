@@ -24,10 +24,14 @@ SOFTWARE.
 
 from discord.ext import commands
 from discord_slash import cog_ext
-from my_utils import is_user_authorized
+from my_utils import is_user_authorized, delete_row_sheet
 from myembeds import e_stress
 from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext
 from discord_slash.model import ButtonStyle
+
+
+ordinal = lambda n: "%d%s" % (n, "tsnrhtdd"[(n // 10 % 10 != 1) * (n % 10 < 4) * n % 10::4])
+# https://codegolf.stackexchange.com/a/4712
 
 
 class DeleteStuffSlash(commands.Cog):
@@ -39,20 +43,32 @@ class DeleteStuffSlash(commands.Cog):
         description="to delete 'stuff' from bot"
     )
     async def delete_stuff_from_bot(self, ctx):
-        print("herer")
         if not is_user_authorized(ctx.author_id):
             await ctx.send("no prems 4 u")
             return
 
-        buttons = [create_button(style=ButtonStyle.red, label=f"{x}th", custom_id=f"{x}") for x in range(1, 6)]
+        something = e_stress(-1)
+
+        if something[1] > 6:
+            await ctx.send("cant use, deadlines greater than 5, developer very lazy to implement")
+            return
+
+        buttons = [
+            create_button(style=ButtonStyle.red, label=ordinal(x), custom_id=f"{x}") for x in range(1, something[1] + 1)
+        ]
         action_row = create_actionrow(*buttons)
-        await ctx.send("select the option which you want to delete", embed=e_stress(), components=[action_row])
+        await ctx.send("select the option which you want to delete", embed=something[0], components=[action_row])
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext):
         if not is_user_authorized(ctx.author_id):
-            return
-        await ctx.edit_origin(content=f"succesfully deleted {ctx.custom_id}th thing", components=None, embed=None)
+            await ctx.send("no prems 4 u nab", hidden=True)
+        await ctx.edit_origin(
+            content=f"succesfully deleted {ordinal(int(ctx.custom_id))} thing\n\tby- {ctx.author.mention}",
+            components=None,
+            embed=None
+        )
+        delete_row_sheet(int(ctx.custom_id))
 
 
 def setup(client):

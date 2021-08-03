@@ -42,6 +42,12 @@ def insert_row_sheet(deadline: str, name: str) -> None:
     sheet.insert_row([name, deadline], 2)
 
 
+def delete_row_sheet(row_number: int) -> None:
+    gc = gspread.service_account(filename="creds__.json")
+    sheet = gc.open("StressMeOut").sheet1
+    sheet.delete_row(row_number + 1)
+
+
 def is_user_authorized(unique_id: int) -> bool:
     with open("name_list_auth.json", "r") as f:
         user_ids_auth = json.load(f)

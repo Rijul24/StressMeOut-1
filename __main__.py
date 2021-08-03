@@ -33,6 +33,7 @@ from flask_thing import keep_alive
 
 print("Initializing...")
 
+activity = discord.Activity(type=discord.ActivityType.watching, name="you $Stress out")
 
 intents = discord.Intents.all()
 client = commands.Bot(
@@ -40,7 +41,8 @@ client = commands.Bot(
     intents=intents,
     case_insensitive=True,
     help_command=None,
-    when_mentioned=True
+    when_mentioned=True,
+    activity=activity
 )
 slash = discord_slash.SlashCommand(client, sync_commands=True)
 
