@@ -24,19 +24,17 @@ SOFTWARE.
 
 from discord.ext import commands
 from discord_slash import cog_ext
-from my_utils import is_user_authorized, delete_row_sheet
-from myembeds import e_stress
-from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext
 from discord_slash.model import ButtonStyle
+from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext
 
-
-ordinal = lambda n: "%d%s" % (n, "tsnrhtdd"[(n // 10 % 10 != 1) * (n % 10 < 4) * n % 10::4])
-# https://codegolf.stackexchange.com/a/4712
+from utils.myembeds import e_stress
+from utils.misc import is_user_authorized, ordinal
+from utils.google_sheet_funcs import delete_row_sheet
 
 
 class DeleteStuffSlash(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
 
     @cog_ext.cog_slash(
         name="Delete",
@@ -49,6 +47,7 @@ class DeleteStuffSlash(commands.Cog):
 
         something = e_stress(-1)
 
+        # TODO: read the docs and complete this :redeyes:
         if something[1] > 6:
             await ctx.send("cant use, deadlines greater than 5, developer very lazy to implement")
             return
@@ -64,12 +63,12 @@ class DeleteStuffSlash(commands.Cog):
         if not is_user_authorized(ctx.author_id):
             await ctx.send("no prems 4 u nab", hidden=True)
         await ctx.edit_origin(
-            content=f"succesfully deleted {ordinal(int(ctx.custom_id))} thing\n\tby- {ctx.author.mention}",
+            content=f"succesfully deleted {ordinal(int(ctx.custom_id))} thing\n\tby- {ctx.author}",
             components=None,
             embed=None
         )
         delete_row_sheet(int(ctx.custom_id))
 
 
-def setup(client):
-    client.add_cog(DeleteStuffSlash(client))
+def setup(bot):
+    bot.add_cog(DeleteStuffSlash(bot))

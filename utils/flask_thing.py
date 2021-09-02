@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello, I am alive!"
+    return "Hello, I am alive!, what about you :)"
 
 
 def run():

@@ -24,8 +24,7 @@ SOFTWARE.
 
 
 import discord
-from get_data import conv_list
-from getpref import get_pref
+from utils.get_data import conv_list
 
 
 invite = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
@@ -33,6 +32,7 @@ help_link = "https://github.com/armaanbadhan/StressMeOut/blob/main/help.md"
 
 
 def e_stress(parameter=0):
+    # TODO: delete parameter arg ffs
     # param = 0 -> only embed, = -1 -> incude number
     res, length = conv_list()
     embeded = discord.Embed(color=0x7289DA)
@@ -51,6 +51,7 @@ def e_stress(parameter=0):
 
 
 def e_help():
+    # TODO: delete
     embeded = discord.Embed(
         colour=0x00FF00,
         title="HELP",
@@ -90,7 +91,8 @@ def e_miss_perm_role():
 
 
 def e_whatpref(ctx):
-    pre = get_pref('a', ctx)[0]
+    # TODO: change
+    pre = "$"
     embeded = discord.Embed(
         color=0x0000FF,
         title="StressMeOut Prefixes",

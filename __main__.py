@@ -24,30 +24,40 @@ SOFTWARE.
 
 import os
 import discord
-from discord.ext import commands
-from getpref import get_pref
-import myembeds
 import discord_slash
-from flask_thing import keep_alive
+
+from discord.ext import commands
+from discord.ext.commands.bot import when_mentioned_or
+from utils import myembeds
+from utils.flask_thing import keep_alive
+
+from constants import LOGGING_CHANNEL_ID, OWNERS, TOKEN
 
 
 print("Initializing...")
 
-activity = discord.Activity(type=discord.ActivityType.watching, name="you $Stress out")
+activity = discord.Activity(type=discord.ActivityType.watching, name="you $stress out")
 
 intents = discord.Intents.all()
-client = commands.Bot(
-    command_prefix=get_pref,
+bot = commands.Bot(
+    command_prefix=when_mentioned_or("$"),
     intents=intents,
     case_insensitive=True,
     help_command=None,
     when_mentioned=True,
-    activity=activity
+    activity=activity,
+    owner_ids=OWNERS
 )
-slash = discord_slash.SlashCommand(client, sync_commands=True)
+slash = discord_slash.SlashCommand(bot, sync_commands=True)
 
 
-@client.event
+@bot.event
+async def on_ready():
+    logging_channel = await bot.fetch_channel(LOGGING_CHANNEL_ID)
+    await logging_channel.send(f"Bot ready")
+
+
+@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
@@ -60,39 +70,42 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.NotOwner):
         await ctx.send(embed=myembeds.e_miss_perm_owner())
         return
-    print(error)
+    desc = f"{ctx.message.content}\n{str(error)}"
+    logging_channel = await bot.fetch_channel(LOGGING_CHANNEL_ID)
+    await logging_channel.send(desc)
 
 
-@client.command()
+@bot.command()
 @commands.is_owner()
 async def load(ctx, extension):
-    client.load_extension(f"cogs.{extension}")
+    bot.load_extension(f"cogs.{extension}")
     await ctx.send(f"**Loaded {extension}**")
 
 
-@client.command()
+@bot.command()
 @commands.is_owner()
 async def unload(ctx, extension):
-    client.unload_extension(f"cogs.{extension}")
+    bot.unload_extension(f"cogs.{extension}")
     await ctx.send(f"**Unloaded {extension}**")
 
 
-@client.command()
+@bot.command()
 @commands.is_owner()
 async def reload(ctx, extension):
-    client.reload_extension(f"cogs.{extension}")
+    bot.reload_extension(f"cogs.{extension}")
     await ctx.send(f"**Reloaded {extension}**")
 
 
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        client.load_extension(f"cogs.{filename[:-3]}")
+def start():
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            bot.load_extension(f"cogs.{filename[:-3]}")
 
+    keep_alive()
 
-token = os.getenv('TOKEN')
+    # Run the bot with the token
+    bot.run(TOKEN)
 
 
 if __name__ == "__main__":
-    # Run the bot with the token
-    keep_alive()
-    client.run(token)
+    start()

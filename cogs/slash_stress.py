@@ -1,5 +1,4 @@
-"""
-MIT License
+"""MIT License
 
 Copyright (c) 2021 armaanbadhan
 
@@ -23,18 +22,23 @@ SOFTWARE.
 
 """
 
+
 from discord.ext import commands
+from discord_slash import cog_ext
+from utils.myembeds import e_stress
 
 
-class Ready(commands.Cog):
+class Slash(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print(f"Logged in as {self.client.user}")
-        print("-----------------------------")
+    @cog_ext.cog_slash(
+        name="StressMeOut",
+        description="stresses you out lol"
+    )
+    async def stress_me_out_slash(self, ctx):
+        await ctx.send(embed=e_stress())
 
 
 def setup(client):
-    client.add_cog(Ready(client))
+    client.add_cog(Slash(client))

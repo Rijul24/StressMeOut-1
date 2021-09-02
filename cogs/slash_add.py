@@ -25,12 +25,14 @@ SOFTWARE.
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
-from my_utils import change_timeformat, insert_row_sheet, is_user_authorized
+
+from utils.google_sheet_funcs import insert_row_sheet
+from utils.misc import change_timeformat, is_user_authorized
 
 
 class AddStuffSlash(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
 
     @cog_ext.cog_slash(
         name="add",
@@ -76,11 +78,12 @@ class AddStuffSlash(commands.Cog):
             await ctx.send("no prems 4 u")
             return
         if change_timeformat(deadline):
+            # TODO: scheduler.add_job() here, deadline - 2 hours
             await ctx.send("successful")
             insert_row_sheet(deadline, name)
         else:
             await ctx.send("couldnt add, time format invalid")
 
 
-def setup(client):
-    client.add_cog(AddStuffSlash(client))
+def setup(bot):
+    bot.add_cog(AddStuffSlash(bot))

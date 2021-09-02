@@ -23,34 +23,36 @@ SOFTWARE.
 
 """
 
+import utils.myembeds
 
 from discord.ext import commands
 from asyncio import sleep
-from myembeds import *
 
 
 class Cmds(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.client = bot
 
     @commands.command(aliases=["stressme", "stressmeout"])
     async def stress(self, ctx):
         async with ctx.typing():
             await sleep(0)
-        await ctx.send(embed=e_stress())
+        await ctx.send(embed=utils.myembeds.e_stress())
 
     @commands.command()
     async def help(self, ctx):
+        # TODO: change to normal text thing
         async with ctx.typing():
             await sleep(0)
-        await ctx.send(embed=e_help())
+        await ctx.send(embed=utils.myembeds.e_help())
 
     @commands.command()
     async def prefix(self, ctx):
+        # TODO: change of prefix?
         async with ctx.typing():
             await sleep(0)
-        await ctx.send(embed=e_whatpref(ctx))
+        await ctx.send("prefix in this server is $")
 
 
-def setup(client):
-    client.add_cog(Cmds(client))
+def setup(bot):
+    bot.add_cog(Cmds(bot))

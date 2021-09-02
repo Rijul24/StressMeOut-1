@@ -3,11 +3,9 @@
 # Google API Client secret
 creds__.json
 
-# 
-name_list_auth.json
-
 # python virtual environment/compiled files
 venv/
+env/
 
 # Intellij/PyCharm config
 .idea/

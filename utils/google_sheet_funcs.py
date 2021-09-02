@@ -1,5 +1,4 @@
-"""
-MIT License
+"""MIT License
 
 Copyright (c) 2021 armaanbadhan
 
@@ -23,14 +22,19 @@ SOFTWARE.
 
 """
 
-import json
 
-_bot_mention = "<@!798262042669613083> "
+import gspread
+
+# TODO: switch to a real database
 
 
-def get_pref(client, message):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
-    res = prefixes.get(str(message.guild.id))
-    return res, _bot_mention, "#$"
-# ~universal perfix~ = #$
+def insert_row_sheet(deadline: str, name: str) -> None:
+    gc = gspread.service_account(filename="creds__.json")
+    sheet = gc.open("StressMeOut").sheet1
+    sheet.insert_row([name, deadline], 2)
+
+
+def delete_row_sheet(row_number: int) -> None:
+    gc = gspread.service_account(filename="creds__.json")
+    sheet = gc.open("StressMeOut").sheet1
+    sheet.delete_row(row_number + 1)

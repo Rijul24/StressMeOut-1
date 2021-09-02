@@ -24,7 +24,8 @@ SOFTWARE.
 
 import datetime
 import gspread
-from my_utils import change_timeformat
+
+from utils.misc import change_timeformat
 
 
 def get_list():
