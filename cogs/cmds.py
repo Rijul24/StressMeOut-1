@@ -51,7 +51,7 @@ class Cmds(commands.Cog):
         # TODO: change of prefix?
         async with ctx.typing():
             await sleep(0)
-        await ctx.send("prefix in this server is $")
+        await ctx.send("prefix in this server is $\npls use slash commands")
 
 
 def setup(bot):
