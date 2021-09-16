@@ -25,7 +25,7 @@ SOFTWARE.
 from discord.ext import commands
 from discord_slash import cog_ext
 from discord_slash.model import ButtonStyle
-from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext
+from discord_slash.utils.manage_components import create_button, spread_to_rows, ComponentContext
 
 from utils.myembeds import e_stress
 from utils.misc import is_user_authorized, ordinal
@@ -47,16 +47,11 @@ class DeleteStuffSlash(commands.Cog):
 
         something = e_stress(-1)
 
-        # TODO: read the docs and complete this :redeyes:
-        if something[1] > 6:
-            await ctx.send("cant use, deadlines greater than 5, developer very lazy to implement")
-            return
-
         buttons = [
             create_button(style=ButtonStyle.red, label=ordinal(x), custom_id=f"{x}") for x in range(1, something[1] + 1)
         ]
-        action_row = create_actionrow(*buttons)
-        await ctx.send("select the option which you want to delete", embed=something[0], components=[action_row])
+        rows = spread_to_rows(*buttons)
+        await ctx.send("select the option which you want to delete", embed=something[0], components=rows)
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext):
