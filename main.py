@@ -29,7 +29,6 @@ import discord_slash
 from discord.ext import commands
 from discord.ext.commands.bot import when_mentioned_or
 from utils import myembeds
-from utils.flask_thing import keep_alive
 
 
 from config import LOGGING_CHANNEL_ID, OWNERS, TOKEN, scheduler
@@ -109,7 +108,6 @@ def start():
         if filename.endswith(".py"):
             bot.load_extension(f"cogs.{filename[:-3]}")
 
-    keep_alive()
     scheduler.start()
     bot.run(TOKEN)
 

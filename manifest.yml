@@ -1,5 +1,7 @@
 ---
 applications:
  - name: StressMeOut
-   random-route: true
+   command: python main.py
+   no-route: true
+   health-check-type: process
    memory: 256M
