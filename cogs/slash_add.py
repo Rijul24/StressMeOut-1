@@ -22,28 +22,11 @@ SOFTWARE.
 
 """
 
-import main
-import discord
-import pytz
-
-from config import scheduler
-
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from utils.google_sheet_funcs import insert_row_sheet
 from utils.misc import change_timeformat, is_user_authorized
 from discord_slash.utils.manage_commands import create_option
-
-
-async def send_to_discord(channel_id: int, assignment_name: str, role_id: int = None):
-    channel = main.bot.get_channel(channel_id)
-    if channel:
-        embed = discord.Embed(
-            title=assignment_name,
-            description="Due in 1 Hour",
-            colour=0xff0000
-        )
-        await channel.send(f"<&@{role_id}>", embed=embed)
 
 
 class AddStuffSlash(commands.Cog):
@@ -103,31 +86,6 @@ class AddStuffSlash(commands.Cog):
         if change_timeformat(deadline):
             await ctx.defer()
             insert_row_sheet(deadline, _name)
-            try:
-                scheduler.add_job(
-                    func=send_to_discord,
-                    trigger="cron",
-                    id=name,
-                    year=2021,
-                    month=month,
-                    day=date,
-                    # TODO: write correct logic for this
-                    hour=int(f"{hours}") - 1,
-                    minute=minutes,
-                    second=0,
-                    timezone=pytz.timezone("Asia/Kolkata"),
-                    kwargs={
-                        "channel_id": 798458622836867094,
-                        "assignment_name": _name,
-                        # TODO: add support for this or something
-                        # "role_id": func(stx.guild_id)
-                    }
-                )
-            except Exception as ex:
-                await ctx.send("couldnt set reminder, error occured")
-                # TODO: send to logging channel, make a function for logging
-                print(ex)
-                return
             await ctx.send("successful")
         else:
             await ctx.send("couldnt add, time format invalid")
