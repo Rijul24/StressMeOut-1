@@ -22,33 +22,34 @@ SOFTWARE.
 
 """
 
-import datetime
 import gspread
+import datetime
 
 from utils.misc import change_timeformat
 
 
-def get_list():
+def conv_list():
     gc = gspread.service_account(filename="creds__.json")
     sheet = gc.open("StressMeOut").sheet1
     data = sheet.get_all_records()
 
-    res = []
+    over, curr, tba = [], [], []
+    current_time = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
     for i in data:
-        res.append([i["TITLE"], i["dd.mm.yyyy hh:mm"]])
-    return res, len(res)
-
-
-def conv_list():
-    res, length = get_list()
-    current = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
-    for i in range(len(res)):
-        left = change_timeformat(res[i][1])
-        if left:
-            left = str(left - current)
-            res[i][1] = left[0:len(left) - 10] + " Hours left"
-            if left[0] == "-":
-                res[i][1] = "over"
+        if not change_timeformat(i["dd.mm.yyyy hh:mm"]):       # time format doesnt match
+            tba.append([i["TITLE"], "To Be Announced"])
         else:
-            res[i][1] = "To Be Announced"
-    return res, length
+            if ( xmas := change_timeformat(i["dd.mm.yyyy hh:mm"]) ) < current_time:
+                over.append([i["TITLE"], "OVER"])
+            else:
+                curr.append([i["TITLE"], xmas])
+
+    curr.sort(key=lambda x: x[1])
+
+    for i in curr:
+        left = str(i[1] - current_time)
+        i[1] = left[0:len(left) - 10] + " Hours left"
+
+    res = over + curr + tba
+
+    return res, len(res)

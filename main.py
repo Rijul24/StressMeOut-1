@@ -31,7 +31,7 @@ from discord.ext.commands.bot import when_mentioned_or
 from utils import myembeds
 
 
-from config import LOGGING_CHANNEL_ID, OWNERS, TOKEN, scheduler
+from config import LOGGING_CHANNEL_ID, OWNERS, TOKEN
 
 
 print("Initializing...")
@@ -108,7 +108,6 @@ def start():
         if filename.endswith(".py"):
             bot.load_extension(f"cogs.{filename[:-3]}")
 
-    scheduler.start()
     bot.run(TOKEN)
 
 
