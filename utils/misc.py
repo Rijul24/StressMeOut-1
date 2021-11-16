@@ -11,7 +11,7 @@ def change_timeformat(inp: str):
 
 def is_user_authorized(unique_id: int) -> bool:
     # TODO: work on it lol
-    return unique_id in {428956244238270475, 556140685858963458, 786851962833862676}
+    return unique_id in {428956244238270475, 556140685858963458, 786851962833862676, 782940990801051715}
 
 
 def ordinal(n: int) -> str:

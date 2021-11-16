@@ -47,8 +47,7 @@ def conv_list():
     curr.sort(key=lambda x: x[1])
 
     for i in curr:
-        left = str(i[1] - current_time)
-        i[1] = left[0:len(left) - 10] + " Hours left"
+        i[1] = "<t:" + str(int(i[1].timestamp())) + ":R>"
 
     res = over + curr + tba
 
