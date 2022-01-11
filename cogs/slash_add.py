@@ -78,7 +78,7 @@ class AddStuffSlash(commands.Cog):
             hours: SlashContext,
             minutes: SlashContext
     ):
-        deadline = f"{date}.{month}.2021 {hours}:{minutes}"
+        deadline = f"{date}.{month}.2022 {hours}:{minutes}"
         _name = f"{name}"
         if not is_user_authorized(ctx.author_id):
             await ctx.send("no prems 4 u")
